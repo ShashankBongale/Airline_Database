@@ -1,3 +1,4 @@
+
 create table passenger
 (
 psid varchar(10) PRIMARY KEY,
@@ -53,6 +54,17 @@ CONSTRAINT passenger FOREIGN KEY(psid) REFERENCES passenger(psid),
 CONSTRAINT farecharge FOREIGN KEY(fare) REFERENCES airfare(af_id)
 );
 
+create table discount
+(
+dis_id varchar(10) PRIMARY KEY,
+dis_title varchar(25),
+description varchar(50),
+amt float,
+--ps_id varchar(10),
+tr_id varchar(10),
+CONSTRAINT discount_transaction FOREIGN KEY(tr_id) REFERENCES transaction(tr_id)
+--CONSTRAINT passenger_discount FOREIGN KEY(ps_id) REFERENCES passenger(psid)
+);
 create table flight_schedule
 (
 flsch_id varchar(10) PRIMARY KEY,
@@ -60,9 +72,9 @@ flight_date date,
 dept_time varchar(15),
 arrival_time varchar(15),
 aircraft_id varchar(10),
-netfare_id varchar(10),
+disc_id varchar(10),
 CONSTRAINT aircraft FOREIGN KEY(aircraft_id) REFERENCES aircraft(ac_id),
-CONSTRAINT netfare FOREIGN KEY(netfare_id) REFERENCES airfare(af_id)
+CONSTRAINT discid FOREIGN KEY(disc_id) REFERENCES discount(dis_id)
 );
 
 
@@ -75,32 +87,3 @@ amt float,
 tr_id varchar(10),
 CONSTRAINT charges_transaction FOREIGN KEY(tr_id) REFERENCES transaction(tr_id)
 );
-
-create table discount
-(
-dis_id varchar(10) PRIMARY KEY,
-dis_title varchar(25),
-description varchar(50),
-amt float,
-ps_id varchar(10),
-tr_id varchar(10),
-flsch_id varchar(10),
-CONSTRAINT disc_schedule FOREIGN KEY(flsch_id) REFERENCES flight_schedule(flsch_id),
-CONSTRAINT discount_transaction FOREIGN KEY(tr_id) REFERENCES transaction(tr_id),
-CONSTRAINT passenger_discount FOREIGN KEY(ps_id) REFERENCES passenger(psid)
-);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
